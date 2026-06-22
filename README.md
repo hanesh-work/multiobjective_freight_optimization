@@ -157,8 +157,8 @@ The optimization models consistently selected a small group of high-performing p
 ├── scripts/
 │   └── optimization_code.py
 ├── reports/
-│   ├── ASDS_6304_Project_report.pdf
-│   └── ASDS-6304_Project_ppt.pptx
+│   ├── Project_report.pdf
+│   └── Project_ppt.pptx
 └── README.md
 ```
 
