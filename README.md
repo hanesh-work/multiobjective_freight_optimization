@@ -154,8 +154,6 @@ The optimization models consistently selected a small group of high-performing p
 .
 ├── data/
 │   └── Transportation-and-Logistics-Tracking-Dataset.xlsx
-├── notebooks/
-│   └── optimization_notebook.ipynb
 ├── scripts/
 │   └── optimization_code.py
 ├── reports/
