@@ -17,15 +17,15 @@
 
 ## Introduction
 
-This project focuses on transportation and freight optimization using **Python, pandas, NumPy, SciPy, and PuLP** on a real-world logistics dataset. The main goal is to assign trips to transportation providers in a way that improves on-time delivery while also considering cost and vehicle compatibility. [file:7][file:10][file:11]
+This project focuses on transportation and freight optimization using **Python, pandas, NumPy, SciPy, and PuLP** on a real-world logistics dataset. The main goal is to assign trips to transportation providers in a way that improves on-time delivery while also considering cost and vehicle compatibility.
 
-The repository includes exploratory data analysis, missing value handling, provider performance scoring, trip cost calculation, compatibility mapping, and three optimization models: a single-objective on-time model, a multi-objective cost-performance model, and a multi-objective model with compatibility constraints. [file:7][file:10][file:11]
+The repository includes exploratory data analysis, missing value handling, provider performance scoring, trip cost calculation, compatibility mapping, and three optimization models: a single-objective on-time model, a multi-objective cost-performance model, and a multi-objective model with compatibility constraints.
 
 ***
 
 ## Project Overview
 
-**Transportation Optimization Analysis Using Linear and Multi-Objective Models** is a freight assignment optimization project built to identify the most reliable and cost-effective providers for trip allocation. The project evaluates historical provider performance and uses linear programming to recommend improved assignments based on operational constraints. [file:7][file:10][file:11]
+**Transportation Optimization Analysis Using Linear and Multi-Objective Models** is a freight assignment optimization project built to identify the most reliable and cost-effective providers for trip allocation. The project evaluates historical provider performance and uses linear programming to recommend improved assignments based on operational constraints. 
 
 The workflow includes:
 
@@ -34,13 +34,13 @@ The workflow includes:
 - Computing historical on-time delivery scores for each provider.
 - Creating trip-level cost estimates using vehicle type and distance.
 - Solving optimization models to maximize reliability and manage cost.
-- Introducing compatibility rules between providers and vehicle types. [file:7][file:10][file:11]
+- Introducing compatibility rules between providers and vehicle types. 
 
 ***
 
 ## Dataset Overview
 
-The dataset contains **5,399 trip records** across **26 transportation providers**. The data shows skewed provider usage, substantial missing values in several columns, and weak correlations among numerical variables, which makes optimization a stronger choice than prediction for this problem. [file:7][file:10][file:11]
+The dataset contains **5,399 trip records** across **26 transportation providers**. The data shows skewed provider usage, substantial missing values in several columns, and weak correlations among numerical variables, which makes optimization a stronger choice than prediction for this problem.
 
 Key dataset characteristics include:
 
@@ -48,21 +48,21 @@ Key dataset characteristics include:
 - Vehicle types and transportation distance in kilometers.
 - On-time and delay indicators.
 - Driver, route, and shipment metadata.
-- Missingness in provider, driver, and timing fields. [file:7][file:10][file:11]
+- Missingness in provider, driver, and timing fields.
 
 ### Missing Value Handling
 
-The analysis found that the `ontime` and `delay` columns were not clean yes/no labels but instead used values like `G` and missing entries. These were converted into a binary on-time status where `G = 1` and everything else was treated as `0` for optimization purposes. [file:7][file:10][file:11]
+The analysis found that the `ontime` and `delay` columns were not clean yes/no labels but instead used values like `G` and missing entries. These were converted into a binary on-time status where `G = 1` and everything else was treated as `0` for optimization purposes. 
 
 ***
 
 ## Feature Engineering
 
-A provider-level on-time score was created by averaging the binary on-time status for each provider. This score became the main reliability parameter in the optimization models. [file:7][file:10][file:11]
+A provider-level on-time score was created by averaging the binary on-time status for each provider. This score became the main reliability parameter in the optimization models.
 
-A trip cost was also calculated by mapping each `vehicleType` to a per-kilometer cost and multiplying it by `TRANSPORTATIONDISTANCEINKM`. A default cost was used for vehicle types not explicitly listed in the cost dictionary. [file:10][file:11]
+A trip cost was also calculated by mapping each `vehicleType` to a per-kilometer cost and multiplying it by `TRANSPORTATIONDISTANCEINKM`. A default cost was used for vehicle types not explicitly listed in the cost dictionary.
 
-To support the compatibility-based model, vehicle types were grouped into broad categories such as small, medium, and large, and providers were assigned compatibility rules based on those categories. [file:7][file:10][file:11]
+To support the compatibility-based model, vehicle types were grouped into broad categories such as small, medium, and large, and providers were assigned compatibility rules based on those categories. 
 
 ### Vehicle Cost Logic
 
@@ -86,41 +86,41 @@ Three optimization models were built using PuLP:
    Minimizes a weighted combination of total trip cost and negative on-time score.
 
 3. **Multi-objective model with compatibility**  
-   Adds provider-vehicle compatibility constraints to make the solution more realistic. [file:7][file:10][file:11]
+   Adds provider-vehicle compatibility constraints to make the solution more realistic. 
 
-The core decision variable in each model is binary, indicating whether a provider is assigned to a trip. Each trip is constrained to exactly one provider. [file:7][file:10][file:11]
+The core decision variable in each model is binary, indicating whether a provider is assigned to a trip. Each trip is constrained to exactly one provider.
 
 ### Constraints Used
 
 - Each trip must be assigned to exactly one provider.
 - Total cost must remain within the defined budget.
-- Providers can only be assigned to compatible vehicle types in the compatibility model. [file:7][file:10][file:11]
+- Providers can only be assigned to compatible vehicle types in the compatibility model. 
 
 ***
 
 ## Results Summary
 
-The optimization models consistently selected a small group of high-performing providers, especially **WABCOTRANS**, **FORIGOTRANS**, and **BALLY LOGISTICS**. These providers accounted for nearly all optimized assignments in the first two models, showing that historical performance strongly influenced the optimal solution. [file:7][file:10][file:11]
+The optimization models consistently selected a small group of high-performing providers, especially **WABCOTRANS**, **FORIGOTRANS**, and **BALLY LOGISTICS**. These providers accounted for nearly all optimized assignments in the first two models, showing that historical performance strongly influenced the optimal solution.
 
 ### Single-Objective Model
 
 - Optimal total expected on-time score: **5399.00**
 - Assigned trips were concentrated among the highest-performing providers.
-- Nearly all assignments changed from the original provider allocation. [file:7][file:10][file:11]
+- Nearly all assignments changed from the original provider allocation. 
 
 ### Multi-Objective Model
 
 - Optimal total expected on-time score: **5399.00**
 - Optimal total trip cost: **73,261,161.27**
 - Assignments remained heavily concentrated among a few providers.
-- The solution balanced cost and reliability under the budget constraint. [file:7][file:10][file:11]
+- The solution balanced cost and reliability under the budget constraint.
 
 ### Multi-Objective with Compatibility
 
 - Optimal total expected on-time score: **5384.00**
 - Optimal total trip cost: **73,261,161.27**
 - Four providers handled all trips: **WABCOTRANS, FORIGOTRANS, BALLY LOGISTICS, and APACETRANSCO**.
-- The slight drop in on-time score came from enforcing realistic compatibility rules. [file:7][file:10][file:11]
+- The slight drop in on-time score came from enforcing realistic compatibility rules. 
 
 ***
 
@@ -130,7 +130,7 @@ The optimization models consistently selected a small group of high-performing p
 - Optimization significantly improved expected on-time delivery.
 - A small subset of providers consistently outperformed the rest.
 - Cost constraints did not prevent strong delivery performance.
-- Compatibility rules made the model more practical for real-world use. [file:7][file:10][file:11]
+- Compatibility rules made the model more practical for real-world use. 
 
 ***
 
@@ -172,10 +172,10 @@ The optimization models consistently selected a small group of high-performing p
 - Introduce provider capacity limits.
 - Extend the model with geographic clustering and real-time re-optimization.
 - Test alternative objective weights for cost and reliability.
-- Incorporate stochastic demand or uncertainty in provider performance. [file:7][file:10][file:11]
+- Incorporate stochastic demand or uncertainty in provider performance.
 
 ***
 
 ## Acknowledgments
 
-This project was developed as part of an academic optimization and logistics analysis effort focused on improving freight assignment decisions through data-driven linear programming. [file:7][file:10][file:11]
+This project was developed as part of an academic optimization and logistics analysis effort focused on improving freight assignment decisions through data-driven linear programming.
